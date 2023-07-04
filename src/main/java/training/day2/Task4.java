@@ -21,5 +21,6 @@ public class Task4 {
             System.out.println("Invalid input!");
         }
 
+        scanner.close();
     }
 }
