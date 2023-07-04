@@ -8,15 +8,12 @@ public class Hw3 {
         List<String> words = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             words.add(scanner.next());
         }
 
-        for (String word:words){
-            if (word.length() < 4){
-                words.remove(word);
-            }
-        }
+        words.removeIf(word -> word.length() < 4);
+
         for (String word:words){
             System.out.println(word);
         }
