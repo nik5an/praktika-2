@@ -7,7 +7,6 @@ public class Task2 {
         Scanner scanner = new Scanner(System.in);
         String name, pwd;
 
-
         while (true){
             System.out.println("Enter username: ");
             name = scanner.next();
