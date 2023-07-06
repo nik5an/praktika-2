@@ -4,11 +4,10 @@ import java.util.Scanner;
 
 public class Hw2 {
 
-    static boolean mariogotze(int num) {
+    static boolean isEven(int num) {
         if (num % 2 == 0) {
             return true;
         }
-
         return false;
     }
 
@@ -16,6 +15,6 @@ public class Hw2 {
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
 
-        System.out.println(mariogotze(num));
+        System.out.println(isEven(num));
     }
 }
