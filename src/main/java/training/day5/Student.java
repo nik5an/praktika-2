@@ -1,12 +1,13 @@
 package training.day5;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Student extends Person{
     private String class_;
     private int numberInClass;
-    private Map<String, Double> grade;
+    private final Map<String, Double> grade = new HashMap<>();
 
     public Student(String name, String gender, String id, String class_, int numberInClass) {
         super(name, gender, id);
@@ -32,5 +33,9 @@ public class Student extends Person{
     }
     public Map<String, Double> getGrade(){
         return grade;
+    }
+
+    public void setGrade(String subjectName, Double grade){
+        this.grade.put(subjectName, grade);
     }
 }

@@ -133,10 +133,8 @@ public class hw1 {
                 Student student = (Student) person;
                 for (Map.Entry<Teacher, Double> entry : teacherGrades.entrySet()) {
                     Teacher teacher = entry.getKey();
-                    if (teacher.getSubjects().containsAll(student.getGrade().keySet())) {
-                        double totalGrade = entry.getValue() + student.getGrade().values().stream().mapToDouble(Double::doubleValue).sum();
-                        teacherGrades.put(teacher, totalGrade);
-                    }
+                    double totalGrade = entry.getValue() + student.getGrade().values().stream().mapToDouble(Double::doubleValue).sum();
+                    teacherGrades.put(teacher, totalGrade);
                 }
             }
         }
@@ -156,18 +154,18 @@ public class hw1 {
     public static void main(String[] args) {
         List<Person> dataStructure = new ArrayList<>();
 
-        Student student1 = new Student("John", "Male", "123456", "10A", 1);
-        student1.getGrade().put("Math", 5.50);
-        student1.getGrade().put("Physics", 4.75);
-        student1.getGrade().put("History", 6.00);
+        Student student1 = new Student("Kamen", "Male", "123456", "10B", 1);
+        student1.setGrade("Math", 5.50);
+        student1.setGrade("Physics", 4.75);
+        student1.setGrade("Himiq", 6.00);
 
-        Student student2 = new Student("Emily", "Female", "654321", "10A", 2);
-        student2.getGrade().put("Math", 6.00);
-        student2.getGrade().put("Physics", 5.25);
-        student2.getGrade().put("History", 5.50);
+        Student student2 = new Student("Preslava", "Female", "654321", "10A", 2);
+        student2.setGrade("Math", 6.00);
+        student2.setGrade("Physics", 5.25);
+        student2.setGrade("Himiq", 5.50);
 
-        Teacher teacher1 = new Teacher("Mr. Smith", "Male", "987654", "XYZ School", Arrays.asList("Math", "Physics"), 5000.00);
-        Teacher teacher2 = new Teacher("Mrs. Johnson", "Female", "456789", "XYZ School", Arrays.asList("History"), 4500.00);
+        Teacher teacher1 = new Teacher("Bodurkata", "Male", "987654", "PGEE", Arrays.asList("Math", "Physics"), 1700.00);
+        Teacher teacher2 = new Teacher("Prodanova", "Female", "456789", "PGEE", Arrays.asList("Himiq"), 2000.00);
 
         dataStructure.add(student1);
         dataStructure.add(student2);
@@ -186,7 +184,7 @@ public class hw1 {
         System.out.println("Average Salary: " + averageSalary);
 
         double averageGradeStudent1 = getAverageGradeOfStudent(student1);
-        System.out.println("Average Grade of " + student1.getName() + ": " + averageGradeStudent1);
+        System.out.println("Average Grade of " + student1.getName() + ": " + (float)averageGradeStudent1);
 
         double averageGradeClass = getAverageGradeOfClass(dataStructure);
         System.out.println("Average Grade of the Class: " + averageGradeClass);
