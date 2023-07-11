@@ -11,14 +11,7 @@ public class Person {
         this.id = id;
     }
 
-    public Person() {
-        this.name = "Gosho";
-        this.gender = "Male";
-        this.id = "69";
-    }
-
     public String getName() {
-
         return this.name;
     }
 

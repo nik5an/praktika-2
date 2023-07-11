@@ -7,39 +7,46 @@ public class hw1 {
         for (Person person : dataStructure) {
             if (person instanceof Teacher) {
                 Teacher teacher = (Teacher) person;
-                System.out.println("Teacher: " + teacher.getName());
-                System.out.println("ID: " + teacher.getID());
-                System.out.println("Subjects: " + teacher.getSubjects());
-                System.out.println("School: " + teacher.getSchool());
-                System.out.println("Salary: " + teacher.getSalary());
+                System.out.println(teacher.toString());
             } else if (person instanceof Student) {
                 Student student = (Student) person;
-                System.out.println("Student: " + student.getName());
-                System.out.println("ID: " + student.getID());
-                System.out.println("Class: " + student.getClass_());
-                System.out.println("Number in Class: " + student.getNumberInClass());
-                System.out.println("Grades: " + student.getGrade());
+                System.out.println(student.toString());
             }
             System.out.println();
         }
     }
 
+    public static Student compareGradeHigh(double grade, Student student, double highestGrade) {
+        Student temp = null;
+        if (grade > highestGrade) {
+            highestGrade = grade;
+            temp = student;
+        }
+        return temp;
+    }
+
     public static Student getStudentWithHighestGrade(List<Person> dataStructure, String subject) {
-        double highestGrade = 0.0;
         Student studentWithHighestGrade = null;
+        double highestGrade = 0.0;
         for (Person person : dataStructure) {
             if (person instanceof Student) {
                 Student student = (Student) person;
                 if (student.getGrade().containsKey(subject)) {
                     double grade = student.getGrade().get(subject);
-                    if (grade > highestGrade) {
-                        highestGrade = grade;
-                        studentWithHighestGrade = student;
-                    }
+                    studentWithHighestGrade = compareGradeHigh(grade, student, highestGrade);
                 }
             }
         }
         return studentWithHighestGrade;
+    }
+
+    public static Student compareGradeLow(double grade, Student student, double lowestGrade) {
+        Student temp = null;
+        if (grade < lowestGrade) {
+            lowestGrade = grade;
+            temp = student;
+        }
+        return temp;
     }
 
     public static Student getStudentWithLowestGrade(List<Person> dataStructure, String subject) {
@@ -50,14 +57,19 @@ public class hw1 {
                 Student student = (Student) person;
                 if (student.getGrade().containsKey(subject)) {
                     double grade = student.getGrade().get(subject);
-                    if (grade < lowestGrade) {
-                        lowestGrade = grade;
-                        studentWithLowestGrade = student;
-                    }
+                    studentWithLowestGrade = compareGradeLow(grade, student, lowestGrade);
                 }
             }
         }
         return studentWithLowestGrade;
+    }
+
+    public static double calculateSalary(int teacherCount, double totalSalary) {
+        if (teacherCount > 0) {
+            return totalSalary / teacherCount;
+        } else {
+            return 0.0;
+        }
     }
 
     public static double getAverageSalary(List<Person> dataStructure) {
@@ -69,9 +81,14 @@ public class hw1 {
                 totalSalary += teacher.getSalary();
                 teacherCount++;
             }
+
         }
-        if (teacherCount > 0) {
-            return totalSalary / teacherCount;
+        return calculateSalary(teacherCount, totalSalary);
+    }
+
+    public static double calculateGrade(int totalSubjects, double totalGrades) {
+        if (totalSubjects > 0) {
+            return totalGrades / totalSubjects;
         } else {
             return 0.0;
         }
@@ -83,11 +100,7 @@ public class hw1 {
         for (double grade : student.getGrade().values()) {
             totalGrades += grade;
         }
-        if (totalSubjects > 0) {
-            return totalGrades / totalSubjects;
-        } else {
-            return 0.0;
-        }
+        return calculateGrade(totalSubjects, totalGrades);
     }
 
     public static double getAverageGradeOfClass(List<Person> dataStructure) {
@@ -100,11 +113,7 @@ public class hw1 {
                 studentCount++;
             }
         }
-        if (studentCount > 0) {
-            return totalGrades / studentCount;
-        } else {
-            return 0.0;
-        }
+        return calculateGrade(studentCount, totalGrades);
     }
 
     public static String getSubjectWithHighestGrade(Student student) {
@@ -121,13 +130,15 @@ public class hw1 {
         return subjectWithHighestGrade;
     }
 
-    public static Teacher getTeacherWithHighestGrades(List<Person> dataStructure) {
-        Map<Teacher, Double> teacherGrades = new HashMap<>();
+    public static void getTeachers(Map<Teacher, Double> teacherGrades, List<Person> dataStructure) {
         for (Person person : dataStructure) {
             if (person instanceof Teacher) {
                 teacherGrades.put((Teacher) person, 0.0);
             }
         }
+    }
+
+    public static void getTeacherGrades(Map<Teacher, Double> teacherGrades, List<Person> dataStructure) {
         for (Person person : dataStructure) {
             if (person instanceof Student) {
                 Student student = (Student) person;
@@ -138,6 +149,9 @@ public class hw1 {
                 }
             }
         }
+    }
+
+    public static Teacher getTeacherHighestGrade(Map<Teacher, Double> teacherGrades, List<Person> dataStructure) {
         double highestGrade = 0.0;
         Teacher teacherWithHighestGrades = null;
         for (Map.Entry<Teacher, Double> entry : teacherGrades.entrySet()) {
@@ -151,8 +165,16 @@ public class hw1 {
         return teacherWithHighestGrades;
     }
 
+    public static Teacher getTeacherWithHighestGrades(List<Person> dataStructure) {
+        Map<Teacher, Double> teacherGrades = new HashMap<>();
+
+        getTeachers(teacherGrades, dataStructure);
+        getTeacherGrades(teacherGrades, dataStructure);
+        return getTeacherHighestGrade(teacherGrades, dataStructure);
+    }
+
     public static void main(String[] args) {
-        List<Person> dataStructure = new ArrayList<>();
+        List<Person> People = new ArrayList<>();
 
         Student student1 = new Student("Kamen", "Male", "123456", "10B", 1);
         student1.setGrade("Math", 5.50);
@@ -167,32 +189,32 @@ public class hw1 {
         Teacher teacher1 = new Teacher("Bodurkata", "Male", "987654", "PGEE", Arrays.asList("Math", "Physics"), 1700.00);
         Teacher teacher2 = new Teacher("Prodanova", "Female", "456789", "PGEE", Arrays.asList("Himiq"), 2000.00);
 
-        dataStructure.add(student1);
-        dataStructure.add(student2);
-        dataStructure.add(teacher1);
-        dataStructure.add(teacher2);
+        People.add(student1);
+        People.add(student2);
+        People.add(teacher1);
+        People.add(teacher2);
 
-        printInformation(dataStructure);
+        printInformation(People);
 
-        Student highestGradeStudent = getStudentWithHighestGrade(dataStructure, "Math");
+        Student highestGradeStudent = getStudentWithHighestGrade(People, "Math");
         System.out.println("Student with the highest grade in Math: " + highestGradeStudent.getName());
 
-        Student lowestGradeStudent = getStudentWithLowestGrade(dataStructure, "Physics");
+        Student lowestGradeStudent = getStudentWithLowestGrade(People, "Physics");
         System.out.println("Student with the lowest grade in Physics: " + lowestGradeStudent.getName());
 
-        double averageSalary = getAverageSalary(dataStructure);
+        double averageSalary = getAverageSalary(People);
         System.out.println("Average Salary: " + averageSalary);
 
         double averageGradeStudent1 = getAverageGradeOfStudent(student1);
-        System.out.println("Average Grade of " + student1.getName() + ": " + (float)averageGradeStudent1);
+        System.out.println("Average Grade of " + student1.getName() + ": " + (float) averageGradeStudent1);
 
-        double averageGradeClass = getAverageGradeOfClass(dataStructure);
+        double averageGradeClass = getAverageGradeOfClass(People);
         System.out.println("Average Grade of the Class: " + averageGradeClass);
 
         String subjectHighestGradeStudent1 = getSubjectWithHighestGrade(student1);
         System.out.println("Subject with the highest grade for " + student1.getName() + ": " + subjectHighestGradeStudent1);
 
-        Teacher teacherHighestGrades = getTeacherWithHighestGrades(dataStructure);
+        Teacher teacherHighestGrades = getTeacherWithHighestGrades(People);
         System.out.println("Teacher with the highest grades: " + teacherHighestGrades.getName());
     }
 }
