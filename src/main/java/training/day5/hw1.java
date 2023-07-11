@@ -5,13 +5,7 @@ import java.util.*;
 public class hw1 {
     public static void printInformation(List<Person> dataStructure) {
         for (Person person : dataStructure) {
-            if (person instanceof Teacher) {
-                Teacher teacher = (Teacher) person;
-                System.out.println(teacher.toString());
-            } else if (person instanceof Student) {
-                Student student = (Student) person;
-                System.out.println(student.toString());
-            }
+            System.out.println(person);
             System.out.println();
         }
     }
