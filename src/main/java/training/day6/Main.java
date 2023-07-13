@@ -17,6 +17,12 @@ public class Main {
         }
         return operators;
     }
+
+    public static void checkInt(String word, List<Integer> numbers){
+        if (word.matches("\\d+")) {
+            numbers.add(Integer.parseInt(word));
+        }
+    }
     public static List<Integer> extractInt(String str) {
         List<Integer> numbers = new ArrayList<>();
         String[] words = str.split(" ");
@@ -27,14 +33,10 @@ public class Main {
                 String[] temp = word.split(" ");
                 for (String s:temp) {
                     word = s;
-                    if (word.matches("\\d+")) {
-                        numbers.add(Integer.parseInt(word));
-                    }
+                    checkInt(word, numbers);
                 }
             }
-            if (word.matches("\\d+")) {
-                numbers.add(Integer.parseInt(word));
-            }
+            checkInt(word, numbers);
         }
         return numbers;
     }
